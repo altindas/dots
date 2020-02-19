@@ -1,0 +1,286 @@
+set $mod Mod1
+
+new_window pixel 1
+new_float normal
+
+hide_edge_borders none
+
+bindsym $mod+u border none
+bindsym $mod+y border pixel 1
+bindsym $mod+n border normal
+
+font xft:URWGothic-Book 11
+
+floating_modifier $mod
+
+bindsym $mod+Return exec urxvt
+
+# Window kill command
+bindsym $mod+q kill
+
+# start program launcher
+#bindsym $mod+d exec --no-startup-id rofi -show run -opacity "100"
+bindsym $mod+d exec rofi -show run -lines 7 -eh 1 -width 40 -padding 40 -opacity "85" -bw 0 -bc "#2f3d3f" -bg "#2f3d3f" -fg "#003366" -hlbg "#2f3d3f" -hlfg "#9575cd" -font "SF Pro Display 18"
+bindsym $mod+c exec --no-startup-id ~/.config/polybar/scripts/shutdown.sh
+bindsym $mod+s exec rofi -show window -lines 7 -eh 1 -width 40 -padding 40 -opacity "85" -bw 0 -bc "#2f3d3f" -bg "#2f3d3f" -fg "#003366" -hlbg "#2f3d3f" -hlfg "#9575cd" -font "SF Pro Display 18"
+
+# change focus
+#bindsym $mod+j focus left
+#bindsym $mod+k focus down
+#bindsym $mod+l focus up
+#bindsym $mod+semicolon focus right
+
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+
+
+# workspace back and forth (with/without active container)
+workspace_auto_back_and_forth yes
+bindsym $mod+b workspace back_and_forth
+bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
+
+# split orientation
+bindsym $mod+h split h;exec notify-send 'tile horizontally'
+bindsym $mod+v split v;exec notify-send 'tile vertically'
+bindsym $mod+shift+q split toggle
+
+# toggle fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+#bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# toggle sticky
+bindsym $mod+Shift+s sticky toggle
+
+# focus the parent container
+#bindsym $mod+a focus parent
+
+# move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+
+# navigate workspaces next / previous
+bindsym $mod+Ctrl+Right workspace next
+bindsym $mod+Ctrl+Left workspace prev
+bindsym $mod+j exec --no-startup-id ~/.config/i3/scripts/newworkspace.sh
+
+# workspaces
+set $ws1 1
+set $ws2 2
+set $ws3 3
+set $ws4 4
+set $ws5 5
+set $ws6 6
+set $ws7 7
+set $ws8 8
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+
+# Move focused container to workspace
+bindsym $mod+Ctrl+1 move container to workspace $ws1; workspace $ws1
+bindsym $mod+Ctrl+2 move container to workspace $ws2; workspace $ws2
+bindsym $mod+Ctrl+3 move container to workspace $ws3; workspace $ws3
+bindsym $mod+Ctrl+4 move container to workspace $ws4; workspace $ws4
+bindsym $mod+Ctrl+5 move container to workspace $ws5; workspace $ws5
+bindsym $mod+Ctrl+6 move container to workspace $ws6; workspace $ws6
+bindsym $mod+Ctrl+7 move container to workspace $ws7; workspace $ws7
+bindsym $mod+Ctrl+8 move container to workspace $ws8; workspace $ws8
+
+# Move to workspace with focused container
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+
+# Assign Workspaces
+for_window [class="Spotify"] move container to workspace $ws8
+for_window [class="Telegram"] move container to workspace $ws7
+
+# switch to workspace with urgent window automatically
+for_window [urgent=latest] focus
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+#lock i3
+bindsym $mod+x exec i3lock-fancy
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+exec --no-startup-id xautolock -time 5 -locker "i3lock-fancy" -killtime 10 -killer "xset dpms force off" 
+
+
+# Resize window (you can also use the mouse for that)
+bindsym $mod+r mode "resize"
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym j resize shrink width 5 px or 5 ppt
+        bindsym k resize grow height 5 px or 5 ppt
+        bindsym l resize shrink height 5 px or 5 ppt
+        bindsym semicolon resize grow width 5 px or 5 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # exit resize mode: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+
+# Theme colors
+#client.focused          #272827 #272827 #657b83 #272827 #272827
+#client.focused_inactive #272827 #272827 #657b83 #272827 #272827
+#client.unfocused        #272827 #272827 #657b83 #272827 #272827
+#client.urgent           #272827 #272827 #657b83 #272827 #272827
+#client.placeholder      #272827 #272827 #657b83 #272827 #272827
+
+#client.background       #272827
+
+
+
+# Press $mod+Shift+g to enter the gap mode. Choose o or i for modifying outer/inner gaps. Press one of + / - (in-/decrement for current workspace) or 0 (remove gaps for current workspace). If you also press Shift with these keys, the change will be global for all workspaces.
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+# Pulse Audio controls
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id exec ~/.config/volume/volume.sh up
+bindsym XF86AudioLowerVolume exec --no-startup-id exec ~/.config/volume/volume.sh down
+
+#bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
+#bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
+#bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+
+# Sreen brightness controls
+bindsym XF86MonBrightnessUp exec --no-startup-id ~/.config/volume/brightness.sh up # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id ~/.config/volume/brightness.sh down # decrease screen brightness
+
+#bindsym XF86MonBrightnessUp exec xbacklight +10 # increase screen brightness
+#bindsym XF86MonBrightnessDown exec xbacklight -10 # decrease screen brightness
+
+# Touchpad controls
+#bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
+
+
+#printscreen
+bindsym Print exec scrot ~/Resimler/Screenshots/`date +%Y-%m-%d_%H:%M:%S`.png
+
+#i3 gaps
+for_window [class="^.*"] border pixel 0
+border_radius 5
+gaps inner 25
+gaps outer 0
+#smart_gaps on
+smart_borders on
+
+
+exec_always feh --bg-scale ~/Resimler/a.jpg
+exec_always compton --config ~/.config/compton.conf
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+exec_always --no-startup-id msi-keyboard -m normal -c left,blue,light -c middle,blue,light -c right,blue,light
+exec_always --no-startup-id numlockx on
+exec --no-startup-id easystroke
+exec_always --no-startup-id /usr/bin/dunst
+#exec_always --no-startup-id nm-applet
+exec_always --no-startup-id ~/.config/wpg/wp_init.sh
+
+#open jgmenu 
+bindsym $mod+z exec --no-startup-id jgmenu
+
+#thunar
+bindsym $mod+a exec --no-startup-id thunar
+
+#Redshift
+bindsym $mod+k exec --no-startup-id redshift -O 5000
+bindsym $mod+l exec --no-startup-id redshift -x
+
+#exec_always --no-startup-id redshift -l 38.04:34.77
+
+
+
+
+
+
